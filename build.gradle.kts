@@ -6,7 +6,7 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
