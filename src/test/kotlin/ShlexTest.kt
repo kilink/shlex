@@ -1,3 +1,4 @@
+import net.kilink.shlex.join
 import net.kilink.shlex.quote
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -27,6 +28,20 @@ class ShlexTest {
         for (ch in unsafe) {
             assertEquals("'test${ch}name'", quote("test${ch}name"))
             assertEquals("""'test$ch'"'"'name'"'"''""", quote("test$ch'name'"))
+        }
+    }
+
+    @Test
+    fun testJoin() {
+        val inputs = sequenceOf(
+            listOf("a ", "b") to "'a ' b",
+            listOf("a", " b") to "a ' b'",
+            listOf("a", " ", "b") to "a ' ' b",
+            listOf("\"a", "b\"") to "'\"a' 'b\"'"
+        )
+        for ((splitCommand, expected) in inputs) {
+            assertEquals(expected, join(splitCommand))
+            assertEquals(expected, join(splitCommand.asSequence()))
         }
     }
 }
